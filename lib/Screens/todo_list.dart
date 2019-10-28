@@ -120,6 +120,7 @@ class TodoListState extends State<TodoList> {
               FlatButton(
                 child: const Text('CANCEL'),
                 onPressed: () {
+                  _textFieldController.clear();
                   Navigator.of(context).pop();
                 },
               ),
