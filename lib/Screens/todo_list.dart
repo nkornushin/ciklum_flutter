@@ -47,38 +47,53 @@ class TodoListState extends State<TodoList> {
     return ListView.builder(
       itemCount: count,
       itemBuilder: (BuildContext context, int position) {
-        return Card(
-          color: Colors.white,
-          elevation: 2.0,
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.amber,
-              child: Text(
-                getFirstLetters(todoList[position].title, lettersCount: 1), 
-                style: TextStyle(fontWeight: FontWeight.bold)
-              ),
-            ),
-            title: Text(todoList[position].title, style: TextStyle(fontWeight: FontWeight.bold)),            
-            subtitle: Text(todoList[position].date),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                GestureDetector(
-                  child: Icon(Icons.delete,color: Colors.red,),
-                  onTap: () {
-                    debugPrint('Delete Tapped');
-                    _delete(context, todoList[position]);
-                  },
-                ),
-              ],
-            ),
-            onTap: () {
-              debugPrint('ListTile Tapped');
-            },
-          ),
+
+        final String item = todoList[position].id.toString();
+
+        return Dismissible(
+          key: Key(item),
+          onDismissed: (direction) {
+            _delete(context, todoList[position]);
+          },
+          child: itemCard(todoList[position]),
         );
+        
+        
       },
     );
+  }
+
+  Widget itemCard(Todo todo) {
+    return Card(
+        color: Colors.white,
+        elevation: 2.0,
+        child: ListTile(
+          leading: CircleAvatar(
+            backgroundColor: Colors.amber,
+            child: Text(
+              getFirstLetters(todo.title, lettersCount: 1), 
+              style: TextStyle(fontWeight: FontWeight.bold)
+            ),
+          ),
+          title: Text(todo.title, style: TextStyle(fontWeight: FontWeight.bold)),            
+          subtitle: Text(todo.date),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              GestureDetector(
+                child: Icon(Icons.delete,color: Colors.red,),
+                onTap: () {
+                  debugPrint('Delete Tapped');
+                  _delete(context, todo);
+                },
+              ),
+            ],
+          ),
+          onTap: () {
+            debugPrint('ListTile Tapped');
+          },
+        ),
+      );
   }
 
   Future<void> updateListView() async {
