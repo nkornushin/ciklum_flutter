@@ -80,12 +80,14 @@ class TodoListState extends State<TodoList> {
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              GestureDetector(
-                child: Icon(Icons.delete,color: Colors.red,),
-                onTap: () {
-                  debugPrint('Delete Tapped');
-                  _delete(context, todo);
-                },
+              Builder(
+                builder: (context) => GestureDetector(
+                  child: Icon(Icons.delete,color: Colors.red,),
+                  onTap: () {
+                    debugPrint('Delete Tapped');
+                    _delete(context, todo);
+                  },
+                )
               ),
             ],
           ),
