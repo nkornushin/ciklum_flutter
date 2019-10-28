@@ -102,6 +102,7 @@ class TodoListState extends State<TodoList> {
   }
 
   void _showSnackBar(BuildContext context, String message) {
+    Scaffold.of(context).hideCurrentSnackBar();
     final snackBar = SnackBar(content: Text(message));
     Scaffold.of(context).showSnackBar(snackBar);
   }
